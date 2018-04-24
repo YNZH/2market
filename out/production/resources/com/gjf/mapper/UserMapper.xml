@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gjf.mapper.UserMapper">
+
+    <insert id="saveUser" parameterType="com.gjf.model.User" useGeneratedKeys="true" keyProperty="pk_id">
+        INSERT INTO tb_user (nickname, password, email, phone, gender, school, campus, number, head_img, is_blocked, time_create, time_modified)
+        VALUES (#{nickname}, #{password}, #{email}, #{phone}, #{gender}, #{school}, #{campus}, #{number}, #{headImg},
+                             #{status}, #{timeCreated}, #{timeModified});
+    </insert>
+
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjf.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.gjf.model.Goods">
+    <id column="pk_id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="campus" jdbcType="VARCHAR" property="campus" />
+    <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate" />
+    <result column="time_modified" jdbcType="TIMESTAMP" property="timeModified" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_goods
+    where pk_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gjf.model.Goods">
+    insert into tb_goods (pk_id, user_id, name, 
+      src, price, location, 
+      campus, time_create, time_modified
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{src,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{location,jdbcType=VARCHAR}, 
+      #{campus,jdbcType=VARCHAR}, #{timeCreate,jdbcType=TIMESTAMP}, #{timeModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.gjf.model.Goods">
+    update tb_goods
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      location = #{location,jdbcType=VARCHAR},
+      campus = #{campus,jdbcType=VARCHAR},
+      time_create = #{timeCreate,jdbcType=TIMESTAMP},
+      time_modified = #{timeModified,jdbcType=TIMESTAMP}
+    where pk_id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pk_id, user_id, name, src, price, location, campus, time_create, time_modified
+    from tb_goods
+    where pk_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pk_id, user_id, name, src, price, location, campus, time_create, time_modified
+    from tb_goods
+  </select>
+</mapper>

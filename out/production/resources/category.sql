@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS tb_category;
+CREATE TABLE tb_category (
+  pk_id INT PRIMARY KEY AUTO_INCREMENT,
+  name  VARCHAR(64)
+);
+
+DROP TABLE IF EXISTS tb_school;
+CREATE TABLE tb_school (
+  pk_id INT PRIMARY KEY AUTO_INCREMENT,
+  name  VARCHAR(64),
+  campus VARCHAR(64)
+);

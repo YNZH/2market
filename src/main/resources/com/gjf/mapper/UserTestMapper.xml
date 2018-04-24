@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjf.mapper.UserTestMapper">
+  <resultMap id="BaseResultMap" type="com.gjf.model.UserTest">
+    <id column="pk_id" jdbcType="BIGINT" property="id" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="campus" jdbcType="VARCHAR" property="campus" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="is_blocked" jdbcType="TINYINT" property="status" />
+    <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate" />
+    <result column="time_modified" jdbcType="TIMESTAMP" property="timeModified" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_user
+    where pk_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gjf.model.UserTest">
+    insert into tb_user (pk_id, nickname, password, 
+      email, phone, gender, 
+      school, campus, number, 
+      head_img, is_blocked, time_create, 
+      time_modified)
+    values (#{id,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{school,jdbcType=VARCHAR}, #{campus,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
+      #{headImg,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{timeCreate,jdbcType=TIMESTAMP}, 
+      #{timeModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.gjf.model.UserTest">
+    update tb_user
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      school = #{school,jdbcType=VARCHAR},
+      campus = #{campus,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      is_blocked = #{status,jdbcType=TINYINT},
+      time_create = #{timeCreate,jdbcType=TIMESTAMP},
+      time_modified = #{timeModified,jdbcType=TIMESTAMP}
+    where pk_id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pk_id, nickname, password, email, phone, gender, school, campus, number, head_img, 
+    is_blocked, time_create, time_modified
+    from tb_user
+    where pk_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pk_id, nickname, password, email, phone, gender, school, campus, number, head_img, 
+    is_blocked, time_create, time_modified
+    from tb_user
+  </select>
+</mapper>
