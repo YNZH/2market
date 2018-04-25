@@ -43,18 +43,18 @@
             <!--<ignoreColumn column="FRED" />-->
             <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
         <!--</table>-->
-        <table tableName="tb_user" domainObjectName="UserTest" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+        <table tableName="tb_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="pk_id" property="userId"/>
+            <columnOverride column="pk_id" property="id"/>
             <columnOverride column="is_blocked" property="status"/>
         </table>
         <table tableName="tb_goods" domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="pk_id" property="goodsId"/>
+            <columnOverride column="pk_id" property="id"/>
         </table>
         <table tableName="tb_comment" domainObjectName="Comment" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="pk_id" property="commentId"/>
+            <columnOverride column="pk_id" property="id"/>
         </table>
 
     </context>

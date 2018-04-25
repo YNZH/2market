@@ -10,7 +10,6 @@
         <mapper resource="com/gjf/mapper/UserMapper.xml"/>
         <mapper resource="com/gjf/mapper/GoodsMapper.xml"/>
         <mapper resource="com/gjf/mapper/CommentMapper.xml"/>
-        <mapper resource="com/gjf/mapper/UserTestMapper.xml"/>
     </mappers>
 </configuration>
 
