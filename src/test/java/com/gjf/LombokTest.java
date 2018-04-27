@@ -16,7 +16,7 @@ public class LombokTest {
     @Test
     public void testLombok(){
         Goods goods = new Goods();
-        Goods goods1 = new Goods(2L,1L,"商品2", "link链接", BigDecimal.valueOf(100.2),"武汉理工","渔区",
+        Goods goods1 = new Goods(2L,1L,"商品2", "link链接", BigDecimal.valueOf(100.2),"最新发布","武汉理工","渔区",
                 new Date(),new Date());
         goods.setName("测试");
         System.out.println(goods);

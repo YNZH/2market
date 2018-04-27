@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface GoodsMapper extends BaseMapper<Goods> {
+    Long getGoodsCountByUserId(Long userId);
 }

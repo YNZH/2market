@@ -7,6 +7,8 @@
     <bytecodeTargetLevel>
       <module name="2market_main" target="1.8" />
       <module name="2market_test" target="1.8" />
+      <module name="IDEAWorkSp-2market_main" target="1.8" />
+      <module name="IDEAWorkSp-2market_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

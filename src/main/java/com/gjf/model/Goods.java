@@ -21,6 +21,8 @@ public class Goods {
 
     private BigDecimal price;
 
+    private String category;
+
     private String location;
 
     private String campus;

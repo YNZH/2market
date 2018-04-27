@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/2market.iml" filepath="$PROJECT_DIR$/.idea/2market.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2market_main.iml" filepath="$PROJECT_DIR$/.idea/modules/2market_main.iml" group="2market" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2market_test.iml" filepath="$PROJECT_DIR$/.idea/modules/2market_test.iml" group="2market" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2market_main.iml" filepath="$PROJECT_DIR$/.idea/modules/2market_main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2market_test.iml" filepath="$PROJECT_DIR$/.idea/modules/2market_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IDEAWorkSp-2market_main.iml" filepath="$PROJECT_DIR$/.idea/modules/IDEAWorkSp-2market_main.iml" group="2market" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IDEAWorkSp-2market_test.iml" filepath="$PROJECT_DIR$/.idea/modules/IDEAWorkSp-2market_test.iml" group="2market" />
     </modules>
   </component>
 </project>

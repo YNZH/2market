@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjf.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.gjf.model.Category">
+    <id column="pk_id" jdbcType="BIGINT" property="id" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_category
+    where pk_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gjf.model.Category">
+    insert into tb_category (pk_id, src, name
+      )
+    values (#{id,jdbcType=BIGINT}, #{src,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.gjf.model.Category">
+    update tb_category
+    set src = #{src,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    where pk_id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pk_id, src, name
+    from tb_category
+    where pk_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pk_id, src, name
+    from tb_category
+  </select>
+</mapper>
