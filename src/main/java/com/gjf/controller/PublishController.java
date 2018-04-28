@@ -1,7 +1,7 @@
 package com.gjf.controller;
 
-import com.gjf.config.UploadConfig;
-import com.gjf.config.UrlConfig;
+import com.gjf.config.UploadProperties;
+import com.gjf.config.UrlProperties;
 import com.gjf.mapper.GoodsMapper;
 import com.gjf.model.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,9 @@ import java.util.List;
 public class PublishController {
 
     @Autowired
-    private UploadConfig uploadConfig;
+    private UploadProperties uploadProperties;
     @Autowired
-    private UrlConfig urlConfig;
+    private UrlProperties urlProperties;
     @Autowired
     private GoodsMapper goodsService;
 
@@ -37,7 +37,7 @@ public class PublishController {
         String path = "";
         System.out.println(goods);
         try {
-            path = saveUploadSingleImg(uploadFile, 1L,uploadConfig.getGoodsImgFolder());
+            path = saveUploadSingleImg(uploadFile, 1L, uploadProperties.getGoodsImgFolder());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,6 +82,6 @@ public class PublishController {
             Files.createFile(path);
         }
         Files.write(path, bytes);
-        return relativePath.append(urlConfig.getSeparator()).toString();
+        return relativePath.append(urlProperties.getSeparator()).toString();
     }
 }

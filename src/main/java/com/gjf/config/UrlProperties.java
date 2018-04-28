@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:/config/2market.properties")
 @ConfigurationProperties(prefix = "url")
-public class UrlConfig {
+public class UrlProperties {
     @Getter
     @Setter
     private String excluded;

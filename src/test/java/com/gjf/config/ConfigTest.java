@@ -15,20 +15,20 @@ import java.util.stream.Collectors;
  * Time   : 0:37
  */
 @RunWith(SpringRunner.class)
-@EnableConfigurationProperties({UrlConfig.class,UploadConfig.class})
+@EnableConfigurationProperties({UrlProperties.class, UploadProperties.class})
 public class ConfigTest {
     @Autowired
-    private UrlConfig urlConfig;
+    private UrlProperties urlProperties;
     @Autowired
-    private UploadConfig uploadConfig;
+    private UploadProperties uploadProperties;
 
     @Test
     public void test(){
-        String excludedUrls = urlConfig.getExcluded();
+        String excludedUrls = urlProperties.getExcluded();
         System.out.println(Arrays.stream(excludedUrls.split(",")).collect(
                 Collectors.joining("\n")));
 
-        System.out.println(uploadConfig.getFileFolder());
-        System.out.println(uploadConfig.getGoodsImgFolder());
+        System.out.println(uploadProperties.getFileFolder());
+        System.out.println(uploadProperties.getGoodsImgFolder());
     }
 }

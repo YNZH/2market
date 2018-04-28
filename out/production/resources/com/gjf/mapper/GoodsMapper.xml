@@ -7,6 +7,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="src" jdbcType="VARCHAR" property="src" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="location" jdbcType="VARCHAR" property="location" />
     <result column="campus" jdbcType="VARCHAR" property="campus" />
     <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate" />
@@ -18,11 +19,11 @@
   </delete>
   <insert id="insert" parameterType="com.gjf.model.Goods">
     insert into tb_goods (pk_id, user_id, name, 
-      src, price, location, 
+      src, price, category,location,
       campus, time_create, time_modified
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{src,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{location,jdbcType=VARCHAR}, 
+      #{src,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},#{category,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
       #{campus,jdbcType=VARCHAR}, #{timeCreate,jdbcType=TIMESTAMP}, #{timeModified,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -32,6 +33,7 @@
       name = #{name,jdbcType=VARCHAR},
       src = #{src,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
+      category = #{category,jdbcType=VARCHAR},
       location = #{location,jdbcType=VARCHAR},
       campus = #{campus,jdbcType=VARCHAR},
       time_create = #{timeCreate,jdbcType=TIMESTAMP},
@@ -39,12 +41,17 @@
     where pk_id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select pk_id, user_id, name, src, price, location, campus, time_create, time_modified
+    select pk_id, user_id, name, src, price, category, location, campus, time_create, time_modified
     from tb_goods
     where pk_id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getGoodsCountByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select count(user_id)
+    from tb_goods
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select pk_id, user_id, name, src, price, location, campus, time_create, time_modified
+    select pk_id, user_id, name, src, price,category, location, campus, time_create, time_modified
     from tb_goods
   </select>
 </mapper>

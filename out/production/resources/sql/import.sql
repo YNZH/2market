@@ -22,6 +22,7 @@ CREATE TABLE tb_goods (
   name          VARCHAR(132),
   src           VARCHAR(132),
   price         DECIMAL(18,3),
+  category      VARCHAR(64),
   location      VARCHAR(32),
   campus        VARCHAR(32),
   time_create   DATETIME,

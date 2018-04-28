@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:/config/2market.properties")
 @ConfigurationProperties(prefix = "upload")
-public class UploadConfig {
+public class UploadProperties {
 
     @Getter @Setter private String goodsImgFolder;
 

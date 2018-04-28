@@ -1,6 +1,6 @@
 package com.gjf.filter;
 
-import com.gjf.config.UrlConfig;
+import com.gjf.config.UrlProperties;
 import com.gjf.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,18 +24,18 @@ public class LoginRequiredFilter implements Filter {
     private HttpServletRequest rq;
     private Optional<String> optional;
     @Autowired
-    private UrlConfig urlConfig;
+    private UrlProperties urlProperties;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        excludedUrls = urlConfig.getExcluded();
+        excludedUrls = urlProperties.getExcluded();
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         rq = (HttpServletRequest)request;
         if (excludedUrls!=null && excludedUrls.length()>0) {
-            optional = Arrays.stream(excludedUrls.split(urlConfig.getSeparator()))
+            optional = Arrays.stream(excludedUrls.split(urlProperties.getSeparator()))
                     .filter(x -> x.equalsIgnoreCase(rq.getServletPath()))
                     .findFirst();
         }
