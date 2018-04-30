@@ -45,11 +45,6 @@ public class PublishController {
         return ResponseEntity.ok("\"filePath\":\"" + path + "\"");
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "\"test\":\"valueTest\"";
-    }
-
     private void saveUploadFiles(List<MultipartFile> files) throws IOException {
 
     }

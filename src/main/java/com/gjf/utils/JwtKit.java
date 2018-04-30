@@ -1,7 +1,10 @@
 package com.gjf.utils;
 
+import com.gjf.config.TokenProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.DatatypeConverter;
@@ -12,9 +15,14 @@ import java.util.Date;
  * @Date : 2018/04/23
  * Time   : 9:23
  */
-public class JWTUtil {
+@Component
+public class JwtKit {
+    private static TokenProperties tokenProperties;
 
-    private final static String SECRET = "sdsdsd_123_HDSUHUDIHSDHSLHDLHSLDLH";
+    @Autowired
+    private void setTokenProperties(TokenProperties tokenProperties){
+        JwtKit.tokenProperties = tokenProperties;
+    }
 
     public static String generateToken(String id) {
         Jwts.parser().setSigningKey("").parseClaimsJws("");
@@ -80,6 +88,6 @@ public class JWTUtil {
     }
 
     private static String getKey() {
-        return SECRET;
+        return tokenProperties.getSecret();
     }
 }

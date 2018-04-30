@@ -1,7 +1,7 @@
 package com.gjf.filter;
 
 import com.gjf.config.UrlProperties;
-import com.gjf.utils.JWTUtil;
+import com.gjf.utils.JwtKit;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
@@ -43,7 +43,7 @@ public class LoginRequiredFilter implements Filter {
             System.out.println("=========================url:" + rq.getServletPath() + "进入过滤器需要验证token===================== url:");
             String accessToken = request.getParameter("token");
             if (accessToken != null && accessToken.length() > 0) {
-                JWTUtil.parseId(accessToken);
+                JwtKit.parseId(accessToken);
             }
             System.out.println("token 不存在============");
         }else{
