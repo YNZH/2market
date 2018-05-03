@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.gjf.utils.EncryptKitTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-05-02T04:52:28" hostname="GJF" time="0.008">
+  <properties/>
+  <testcase name="testEncrypt" classname="com.gjf.utils.EncryptKitTest" time="0.008"/>
+  <system-out><![CDATA[d2d32ae91b4431db9476e10c9dad3d24
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

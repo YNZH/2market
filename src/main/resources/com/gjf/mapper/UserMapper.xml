@@ -54,6 +54,14 @@
     from tb_user
     where pk_id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="findUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select pk_id, nickname, password, email, phone, gender, school, campus, number, head_img,
+    is_blocked, time_create, time_modified
+    from tb_user
+    where nickname = #{nickname,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
     select pk_id, nickname, password, email, phone, gender, school, campus, number, head_img, 
     is_blocked, time_create, time_modified

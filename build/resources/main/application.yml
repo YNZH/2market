@@ -19,14 +19,17 @@ spring:
           async-init: true
   mvc:
     date-format: yyyy-MM-dd HH:mm:ss
-
+  devtools:
+    restart:
+      additional-paths: D:/IDEAWorkSp/2market/out/production
 #mybaits 配置
 mybatis:
   config-location: classpath:mybatis-config.xml
 logging:
   level:
-    root: WARN
+    root: INFO
     com.gjf.mapper: TRACE
+
 
 
 

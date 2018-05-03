@@ -16,4 +16,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "token")
 public class TokenProperties {
     @Getter @Setter private String secret;
+    @Getter @Setter private Long expireTime;
 }

@@ -1,16 +1,24 @@
 package com.gjf.handler;
 
-import io.jsonwebtoken.*;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.gjf.exception.ExceptionEnum;
+import com.gjf.exception.GlobalException;
+import com.gjf.model.ResultBean;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: GJF
@@ -21,13 +29,20 @@ import java.util.Map;
 @ResponseBody
 public class GlobalExceptionHandler {
 
-    Map<String, String> body = new HashMap<>(2);
+    private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(value = {UnsupportedJwtException.class, MalformedJwtException.class,
-            SignatureException.class, ExpiredJwtException.class,IllegalArgumentException.class})
-    public ResponseEntity<?> errorToken(Exception exce) {
-        this.body.clear();
-        this.body.put("error", "invalid token");
-        return ResponseEntity.badRequest().body(body);
+    @ExceptionHandler(value = {Exception.class})
+    public ResultBean processException(Exception e) {
+        logger.info("捕获Controller异常信息=========> "+e.getClass().getName());
+        e.printStackTrace();
+        if (e instanceof JwtException){
+            return ResultBean.error(ExceptionEnum.INVALID_TOKEN);
+        }
+        if (e instanceof GlobalException) {
+            return ResultBean.error(((GlobalException) e).getCode()
+                    ,e.getMessage());
+        }
+        logger.info("未知错误");
+        return ResultBean.error(ExceptionEnum.UNKNOW_ERROR);
     }
 }

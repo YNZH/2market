@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Phone {
-    String message() default "手机号不合法";
+    String message() default "手机号格式不正确";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
