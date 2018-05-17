@@ -2,7 +2,10 @@ package com.gjf.controller;
 
 import com.gjf.config.UploadProperties;
 import com.gjf.config.UrlProperties;
+import com.gjf.exception.ExceptionEnum;
+import com.gjf.exception.GlobalException;
 import com.gjf.mapper.GoodsMapper;
+import com.gjf.mapper.base.BaseMapper;
 import com.gjf.model.Goods;
 import com.gjf.model.ResultBean;
 import org.slf4j.Logger;
@@ -39,57 +42,52 @@ public class GoodsController {
     private GoodsMapper goodsService;
 
     @PostMapping("/publish.do")
-    public ResultBean publish(Goods goods, @RequestParam("goodsImg") MultipartFile uploadFile,String userId) {
-        String path = "";
+    public ResultBean publish(Goods goods, @RequestParam("goodsImg") MultipartFile uploadFile, String userId) {
+        String path;
         try {
             path = saveUploadSingleImg(uploadFile, Long.valueOf(userId), uploadProperties.getGoodsImgFolder());
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResultBean.error(ExceptionEnum.UPLOAD_ERROR);
         }
         goods.setSrc(path);
         goodsService.insert(goods);
         return ResultBean.ok("\"filePath\":\"" + path + "\"");
     }
-
-    @RequestMapping(value = "/goods/category/{category}",method = RequestMethod.GET)
-    public ResultBean getGoodsByCategory(@PathVariable String category){
-        logger.info("category===========>"+category);
-        List<Goods> goodsList = goodsService.getGoodsByCategory(category);
-        List<Map<String,Object>> ret = new ArrayList<>();
-        Map<String,Object> map1 = new HashMap<>();
-        Map<String,Object> map2 = new HashMap<>();
-        Map<String,Object> map3 = new HashMap<>();
-        map1.put("count",goodsList.size());
-        map2.put("list",goodsList);
-        map3.put("prefix",uploadProperties.getGoodsImgFolder());
-        ret.add(map1);
-        ret.add(map2);
-        ret.add(map3);
-        logger.info("result===============>"+ret.toString());
-        return ResultBean.ok(ret);
+    @RequestMapping(value = "/goods/category/{category}", method = RequestMethod.GET)
+    public ResultBean getGoodsByCategory(@PathVariable String category) {
+        logger.info("category===========>" + category);
+        if ("newest".equalsIgnoreCase(category)) {
+            return ResultBean.ok(goodsService.getRecentlyGoods(category));
+        }
+        return ResultBean.ok(goodsService.getGoodsByCategory(category));
     }
+
+    @RequestMapping(value = "/goods/{goodsId}",method = RequestMethod.GET)
+    public ResultBean getGoodsAndUserByGoodsId(@PathVariable Long goodsId){
+        return ResultBean.ok(goodsService.selectGoodsAndUserByGoodsId(goodsId));
+    }
+
 
     private void saveUploadFiles(List<MultipartFile> files) throws IOException {
 
     }
 
     /**
-     *
      * @param file 上传的商品图片
      * @param uid  上传用户的id
-     * @return     上传图片的relativePath 形式为{"uid+File.separator+goodsCount.[jpg|png|其他格式]+UrlConfig.separator"}
-     *              对应数据库中图片的src = relativePath1{$url.separator}relativePath2{$url.separator}relativePath3 等
-     *              用url.separator分隔路径
+     * @return 上传图片的relativePath 形式为{"uid+File.separator+goodsCount.[jpg|png|其他格式]+UrlConfig.separator"}
+     * 对应数据库中图片的src = relativePath1{$url.separator}relativePath2{$url.separator}relativePath3 等
+     * 用url.separator分隔路径
      * @throws IOException
      */
-    private String saveUploadSingleImg(MultipartFile file, Long uid,String folderType) throws IOException {
+    private String saveUploadSingleImg(MultipartFile file, Long uid, String folderType) throws IOException {
         StringBuffer relativePath;
         if (file.isEmpty()) {
             throw new IOException("文件大小不能为空");
         }
         byte[] bytes = file.getBytes();
         relativePath = new StringBuffer();
-        relativePath.append(uid).append(File.separator)
+        relativePath.append(uid).append("/")
                 .append(goodsService.getGoodsCountByUserId(uid) + 1L)
                 .append(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')));
         Path path = Paths.get(folderType, relativePath.toString());

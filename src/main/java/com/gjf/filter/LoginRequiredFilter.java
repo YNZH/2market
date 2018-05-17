@@ -6,6 +6,7 @@ import com.gjf.exception.GlobalException;
 import com.gjf.model.ResultBean;
 import com.gjf.utils.JwtKit;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import org.slf4j.Logger;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import springfox.documentation.spring.web.json.Json;
 
 /**
@@ -28,7 +31,7 @@ import springfox.documentation.spring.web.json.Json;
  * @Date : 2018/04/23
  * Time   : 16:21
  */
-@WebFilter(urlPatterns = "/api/*")
+@WebFilter(urlPatterns = "/api/*",asyncSupported = true)
 public class LoginRequiredFilter implements Filter {
 
     private String excludedUrls;
@@ -37,6 +40,8 @@ public class LoginRequiredFilter implements Filter {
     @Autowired
     private UrlProperties urlProperties;
     private Logger logger = LoggerFactory.getLogger(LoginRequiredFilter.class);
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,13 +58,23 @@ public class LoginRequiredFilter implements Filter {
         }
         if (!optional.isPresent()) {
             logger.info("=========================url:" + rq.getServletPath() + "进入过滤器需要验证token=====================");
-            String accessToken = request.getParameter("token");
+            String accessToken = JwtKit.getTokenFromRequest((HttpServletRequest) request);
             logger.info("token======>"+accessToken);
             if (accessToken != null && accessToken.length() > 0) {
                 response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
                 try {
                     Long id = JwtKit.parseId(accessToken);
+
+                    stringRedisTemplate.opsForValue().set("sessionId","token~~~");
+                    logger.info("redis的的额值"+stringRedisTemplate.opsForValue().get("sessionId"));
+
+                    if (JwtKit.isWillExpire(accessToken)) {
+                        logger.info("即将过期 refresh token");
+                    }else{
+                        logger.info("还未过期");
+                    }
                     logger.info("userid==========>"+id);
+                    logger.info("进入登陆状态");
                 } catch (JwtException e) {
                     logger.info("捕获JWt异常");
                     response.getWriter().write(ResultBean.exceptionEnum2Json(ExceptionEnum.INVALID_TOKEN));

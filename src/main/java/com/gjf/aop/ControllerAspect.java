@@ -27,16 +27,25 @@ public class ControllerAspect {
 
     @Before("log()")
     public void logBefore(JoinPoint joinPoint) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        //log something
-        logger.info("===================================request before step into method================================");
-        logger.info("url = {}", request.getRequestURI());
-        logger.info("Request.Method = {}", request.getMethod());
-        logger.info("ip = {}", request.getRemoteAddr());
+        logger.info("wadahd");
         logger.info("method to invoke = {}", joinPoint.getSignature().getDeclaringTypeName() + "=====>"
                 + joinPoint.getSignature().getName());
         logger.info("args = {}",joinPoint.getArgs());
+
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+        if (requestAttributes!=null){
+            HttpServletRequest request = requestAttributes.getRequest();
+            logger.info("===================================request before step into method================================");
+            logger.info("url = {}", request.getRequestURI());
+            logger.info("Request.Method = {}", request.getMethod());
+            logger.info("ip = {}", request.getRemoteAddr());
+        }
+        else{
+            logger.info("request !!!!!!!!!!!!!不属于httpRequest");
+        }
+
+
     }
 
     @After("log()")
@@ -47,7 +56,13 @@ public class ControllerAspect {
     @AfterReturning(pointcut = "log()", returning = "object")
     public void logReturn(Object object) {
         logger.info("===================================response value================================");
-        logger.info("response = {}",object.toString());
+
+        if (object!=null) {
+            logger.info("response = {}",object.toString());
+        } else {
+            logger.info("返回的值为空~~~");
+        }
+
     }
 
 }

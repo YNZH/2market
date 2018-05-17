@@ -12,5 +12,8 @@ import java.util.Map;
 @Repository
 public interface GoodsMapper extends BaseMapper<Goods> {
     Long getGoodsCountByUserId(Long userId);
-    List<Goods> getGoodsByCategory(String category);
+    List<Map<String,Object>> getGoodsByCategory(String category);
+    List<Map<String,Object>> getRecentlyGoods(String category);
+    Map<String,Object> selectGoodsAndUserByGoodsId(Long id);
+
 }

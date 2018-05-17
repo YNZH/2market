@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * Time   : 0:08
  */
 @Component
-@PropertySource("classpath:/config/2market.properties")
+@PropertySource("classpath:config/2market.properties")
 @ConfigurationProperties(prefix = "url")
 public class UrlProperties {
     @Getter

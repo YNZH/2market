@@ -1,5 +1,7 @@
 
 spring:
+  config:
+    location: classpath:/application.properties,classpath:/config/2market.properties
   jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8:00
@@ -22,6 +24,11 @@ spring:
   devtools:
     restart:
       additional-paths: D:/IDEAWorkSp/2market/out/production
+  redis:
+    password:
+  servlet:
+    multipart:
+      max-file-size: 10MB
 #mybaits 配置
 mybatis:
   config-location: classpath:mybatis-config.xml
@@ -29,6 +36,8 @@ logging:
   level:
     root: INFO
     com.gjf.mapper: TRACE
+
+#
 
 
 

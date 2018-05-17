@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Time   : 15:42
  */
 @Component
-@PropertySource(value = "classpath:/config/2market.properties")
+@PropertySource(value = "classpath:config/2market.properties")
 @ConfigurationProperties(prefix = "token")
 public class TokenProperties {
     @Getter @Setter private String secret;

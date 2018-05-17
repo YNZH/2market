@@ -1,0 +1,1 @@
+java -jar mybatis-generator-core-1.3.6.jar -configfile D:\IDEAWorkSp\2market\src\main\resources\generatorConfig-2.xml  -overwrite

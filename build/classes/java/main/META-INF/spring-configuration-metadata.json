@@ -1,0 +1,73 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.gjf.config.SchoolProperties",
+      "name": "schools",
+      "type": "com.gjf.config.SchoolProperties"
+    },
+    {
+      "sourceType": "com.gjf.config.TokenProperties",
+      "name": "token",
+      "type": "com.gjf.config.TokenProperties"
+    },
+    {
+      "sourceType": "com.gjf.config.UploadProperties",
+      "name": "upload",
+      "type": "com.gjf.config.UploadProperties"
+    },
+    {
+      "sourceType": "com.gjf.config.UrlProperties",
+      "name": "url",
+      "type": "com.gjf.config.UrlProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.gjf.config.SchoolProperties",
+      "name": "schools.map",
+      "description": "@ Map<String,String> 1th String represent School's name\n                      2th String represent School's URL and ClassName ,whose form as {http:\/\/school.com,package.school.WHUT}",
+      "type": "java.util.HashMap<java.lang.String,java.lang.String>"
+    },
+    {
+      "sourceType": "com.gjf.config.TokenProperties",
+      "name": "token.expire-time",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "com.gjf.config.TokenProperties",
+      "name": "token.secret",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UploadProperties",
+      "name": "upload.file-folder",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UploadProperties",
+      "name": "upload.goods-img-folder",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UploadProperties",
+      "name": "upload.header-img-folder",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UploadProperties",
+      "name": "upload.prefix",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UrlProperties",
+      "name": "url.excluded",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.gjf.config.UrlProperties",
+      "name": "url.separator",
+      "type": "java.lang.String"
+    }
+  ]
+}

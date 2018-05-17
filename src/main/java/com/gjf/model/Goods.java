@@ -23,6 +23,8 @@ public class Goods {
 
     private String category;
 
+    private String description;
+
     private String location;
 
     private String campus;

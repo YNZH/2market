@@ -7,6 +7,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,6 +38,9 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         if (e instanceof JwtException){
             return ResultBean.error(ExceptionEnum.INVALID_TOKEN);
+        }
+        if (e instanceof DuplicateKeyException){
+            return ResultBean.error(ExceptionEnum.DUPLICATED_KEY);
         }
         if (e instanceof GlobalException) {
             return ResultBean.error(((GlobalException) e).getCode()

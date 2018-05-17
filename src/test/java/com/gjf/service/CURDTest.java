@@ -56,11 +56,11 @@ public class CURDTest {
 
     @Test public void testGoodsService() {
 
-        Goods goods1 = new Goods(1L, 1L, "商品1", "link链接1", BigDecimal.valueOf(100.2),"最新发布", "武汉理工", "渔区",
+        Goods goods1 = new Goods(1L, 1L, "商品1", "link链接1", BigDecimal.valueOf(100.2),"最新发布","描述1", "武汉理工", "渔区",
                 new Date(), null);
-        Goods goods2 = new Goods(2L, 1L, "商品2", "link链接2", BigDecimal.valueOf(100.2),"闲置数码", "武汉理工", "渔区",
+        Goods goods2 = new Goods(2L, 1L, "商品2", "link链接2", BigDecimal.valueOf(100.2),"闲置数码","描述2", "武汉理工", "渔区",
                 new Date(), null);
-        Goods goods3 = new Goods(3L, 1L, "商品2", "link链接2", BigDecimal.valueOf(100.2), "校园代步","武汉理工", "渔区",
+        Goods goods3 = new Goods(3L, 1L, "商品2", "link链接2", BigDecimal.valueOf(100.2), "校园代步","描述3","武汉理工", "渔区",
                 new Date(), null);
 //
         // BaseMapper增删改查
@@ -78,8 +78,8 @@ public class CURDTest {
 
     @Test public void testCommentService() {
         //增删改查
-        Comment comment1 = new Comment(1L,1L,1L,"这是评论1","图片1",new Date(),null);
-        Comment comment2 = new Comment(2L,2L,2L,"这是评论2","图片2",new Date(),null);
+        Comment comment1 = new Comment(1L,1L,1L,1L,"这是评论1","图片1",new Date(),null);
+        Comment comment2 = new Comment(2L,2L,2L,1L,"这是评论2","图片2",new Date(),null);
         CURDTemplate.execute(commentMapper,comment1,comment2);
     }
 }

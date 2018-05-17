@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Time   : 10:29
  */
 @Component
-@PropertySource("classpath:/config/2market.properties")
+@PropertySource("classpath:config/2market.properties")
 @ConfigurationProperties(prefix = "upload")
 public class UploadProperties {
 
@@ -21,4 +21,5 @@ public class UploadProperties {
     @Getter @Setter private String headerImgFolder;
 
     @Getter @Setter private String fileFolder;
+    @Getter @Setter private String prefix;
 }

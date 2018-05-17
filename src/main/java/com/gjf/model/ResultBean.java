@@ -87,7 +87,7 @@ public class ResultBean<T> {
      * @param exceptionEnum     the  exception json to write
      */
     public static String exceptionEnum2Json(ExceptionEnum exceptionEnum){
-        return  "{\"code\":\""+exceptionEnum.getCode()+"\"" +",\"msg\":\""+exceptionEnum.getMsg()+"\"}";
+        return  "{\"code\":"+exceptionEnum.getCode()+",\"msg\":\""+exceptionEnum.getMsg()+"\"}";
 
     }
 }

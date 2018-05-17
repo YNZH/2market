@@ -18,7 +18,8 @@ public enum ExceptionEnum {
     PARAMETER_ERROR(4, "参数错误"),
     NO_STUDENT(5,"学号验证失败"),
     INVALID_ACCOUNT(6,"账户或者密码错误"),
-    DUPLICATED_NAME(7,"用户名已存在");
+    DUPLICATED_KEY(7,"重复主键"),
+    UPLOAD_ERROR(8,"上传错误");
     @Getter
     @Setter
     private int code;

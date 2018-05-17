@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.gjf.LombokTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-05-02T04:52:04" hostname="GJF" time="0.004">
+<testsuite name="com.gjf.LombokTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-05-14T13:47:11" hostname="GJF" time="0.001">
   <properties/>
-  <testcase name="testLombok" classname="com.gjf.LombokTest" time="0.004"/>
-  <system-out><![CDATA[Goods(id=null, userId=null, name=测试, src=null, price=null, category=null, location=null, campus=null, timeCreate=null, timeModified=null)
-Goods(id=null, userId=null, name=测试, src=null, price=null, category=null, location=null, campus=null, timeCreate=null, timeModified=null)
-Goods(id=2, userId=1, name=商品2, src=link链接, price=100.2, category=最新发布, location=武汉理工, campus=渔区, timeCreate=Wed May 02 12:52:04 CST 2018, timeModified=Wed May 02 12:52:04 CST 2018)
-Goods(id=2, userId=1, name=商品2, src=link链接, price=100.2, category=最新发布, location=武汉理工, campus=渔区, timeCreate=Wed May 02 12:52:04 CST 2018, timeModified=Wed May 02 12:52:04 CST 2018)
+  <testcase name="testLombok" classname="com.gjf.LombokTest" time="0.001"/>
+  <system-out><![CDATA[Goods(id=null, userId=null, name=测试, src=null, price=null, category=null, description=null, location=null, campus=null, timeCreate=null, timeModified=null)
+Goods(id=null, userId=null, name=测试, src=null, price=null, category=null, description=null, location=null, campus=null, timeCreate=null, timeModified=null)
+Goods(id=2, userId=1, name=商品2, src=link链接, price=100.2, category=最新发布, description=描述, location=武汉理工, campus=渔区, timeCreate=Mon May 14 21:47:11 CST 2018, timeModified=Mon May 14 21:47:11 CST 2018)
+Goods(id=2, userId=1, name=商品2, src=link链接, price=100.2, category=最新发布, description=描述, location=武汉理工, campus=渔区, timeCreate=Mon May 14 21:47:11 CST 2018, timeModified=Mon May 14 21:47:11 CST 2018)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

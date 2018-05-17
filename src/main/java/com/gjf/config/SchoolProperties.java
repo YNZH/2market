@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Time   : 10:33
  */
 @Component
-@PropertySource(value = "classpath:/config/2market.properties",encoding = "UTF-8")
+@PropertySource(value = "classpath:config/2market.properties",encoding = "UTF-8")
 @ConfigurationProperties(prefix = "schools")
 public class SchoolProperties {
 
