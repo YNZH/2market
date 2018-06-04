@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: eu.bitwalker:UserAgentUtils:1.21">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/eu.bitwalker/UserAgentUtils/1.21/4fa48acc47c6e347c69f8bca0426106fbd5ebd3/UserAgentUtils-1.21.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/eu.bitwalker/UserAgentUtils/1.21/3ae9826b9ca87563d92ccb47dd46bf600adf6690/UserAgentUtils-1.21-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

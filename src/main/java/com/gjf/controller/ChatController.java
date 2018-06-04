@@ -30,6 +30,6 @@ public class ChatController {
     @MessageMapping(value = "/message")
     @SendToUser("/message")
     public void send(Message message){
-        chatService.send2User(message.getToId(),message);
+        chatService.send2User(message.getToId().toString(),message);
     }
 }

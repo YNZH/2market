@@ -1,5 +1,6 @@
 package com.gjf.service;
 
+import com.gjf.mapper.MessageMapper;
 import com.gjf.model.Message;
 import com.gjf.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class ChatService {
+    @Autowired
+    private MessageMapper messageMapper;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
@@ -39,11 +43,16 @@ public class ChatService {
      * send to special user
      */
     public void send2User(String userId,Message responseMessage){
-        if ("nil".equalsIgnoreCase(stringRedisTemplate.opsForValue().get(userId))){
+        responseMessage.setCreateTime(new Date());
+        if (null==stringRedisTemplate.opsForValue().get(userId)){
             // this user is offline
-
+            System.out.println("userID is offline");
+            responseMessage.setOffline(1);
         }else{
+            System.out.println("userID is not offline");
+            responseMessage.setOffline(0);
             simpMessagingTemplate.convertAndSendToUser(userId,"/message",responseMessage);
         }
+        messageMapper.insert(responseMessage);
     }
 }

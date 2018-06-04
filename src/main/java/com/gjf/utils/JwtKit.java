@@ -1,6 +1,8 @@
 package com.gjf.utils;
 
 import com.gjf.config.TokenProperties;
+import com.sun.prism.PixelFormat;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
@@ -45,6 +47,7 @@ public class JwtKit {
     public static String generateToken(String id, String nickname, @NotNull Long ttlMillis) {
         return Jwts.builder()
                 .setId(id)
+                .setSubject(nickname)
                 .setExpiration(new Date(System.currentTimeMillis() + ttlMillis))
                 .signWith(SignatureAlgorithm.HS512, DatatypeConverter.printBase64Binary(getKey().getBytes()))
                 .compact();
@@ -67,7 +70,7 @@ public class JwtKit {
     }
 
     public static boolean isWillExpire(String token) {
-        return System.currentTimeMillis() + tokenProperties.getExpireTime()/4 > parseExpireTime(token).getTime();
+        return System.currentTimeMillis() + tokenProperties.getExpireTime()/2 > parseExpireTime(token).getTime();
     }
 
     /**
@@ -81,6 +84,18 @@ public class JwtKit {
                         .getExpiration();
     }
 
+
+    /**
+     *
+     * @param token access token
+     */
+    public static Claims parseClaimsBody(String token){
+        return Jwts.parser()
+                .setSigningKey(DatatypeConverter.printBase64Binary(getKey().getBytes()))
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     /**
      * @param token access token
      * @return user id
@@ -88,8 +103,7 @@ public class JwtKit {
     public static Long parseId(String token) {
         return Long.valueOf(
                 Jwts.parser()
-                        .setSigningKey(DatatypeConverter
-                                .printBase64Binary(getKey().getBytes()))
+                        .setSigningKey(DatatypeConverter.printBase64Binary(getKey().getBytes()))
                         .parseClaimsJws(token).getBody()
                         .getId()
         );

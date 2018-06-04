@@ -19,7 +19,8 @@ public enum ExceptionEnum {
     NO_STUDENT(5,"学号验证失败"),
     INVALID_ACCOUNT(6,"账户或者密码错误"),
     DUPLICATED_KEY(7,"重复主键"),
-    UPLOAD_ERROR(8,"上传错误");
+    UPLOAD_ERROR(8,"上传错误"),
+    OUTDATED_TOKEN(9,"重新登陆");
     @Getter
     @Setter
     private int code;

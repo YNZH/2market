@@ -73,6 +73,10 @@ public class WebSocketListener {
     }
 
     private void setUserOnline(StompHeaderAccessor stompHeaders){
+        String oldSessionId = stringRedisTemplate.opsForValue().get(Objects.requireNonNull(getClientId(stompHeaders)));
+        if (oldSessionId!=null){
+            stringRedisTemplate.delete(oldSessionId);
+        }
         stringRedisTemplate.opsForValue().set(Objects.requireNonNull(getClientId(stompHeaders)),stompHeaders.getSessionId());
         stringRedisTemplate.opsForValue().set(stompHeaders.getSessionId(),Objects.requireNonNull(getClientId(stompHeaders)));
     }

@@ -9,11 +9,13 @@ import com.gjf.model.School;
 import com.gjf.model.User;
 import com.gjf.service.SchoolFactory;
 import com.gjf.utils.PasswordHash;
+import com.gjf.utils.StringUtil;
 import com.gjf.validator.certification.school.BaseSchool;
 import io.jsonwebtoken.JwtException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class UserController {
 
     @RequestMapping(value = "users/new", method = RequestMethod.POST)
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
-    @ApiImplicitParam(name = "user", value = "请求用户表单（json字符串na'me）", required = true, dataType = "User")
+    @ApiImplicitParam(name = "user", value = "请求用户表单（json字符串name）", required = true, dataType = "User")
     public ResultBean register(@RequestBody @Valid User user, Errors errors) throws Exception {
         Map<String,String> errMsg = new HashMap<>(5);
         if (errors.hasErrors()) {
@@ -60,6 +62,7 @@ public class UserController {
         String realName = school.simulateLogin(user.getNumber(),user.getPassword());
         if (realName!=null && realName.length()>0) {
             user.setHeadImg("defaultHeader.png");
+            user.setStatus(new Byte("0"));
             user.setPassword(PasswordHash.createHash(user.getPassword()));
             userMapper.insert(user);
             return ResultBean.ok();
@@ -77,14 +80,14 @@ public class UserController {
         userMapper.deleteByPrimaryKey(id);
     }
 
-    @RequestMapping(value = "users/{id}", method = RequestMethod.PUT)
-    @ApiOperation(value = "更新用户详细信息", notes = "根据url的id来指定更新对象，并根据传过来的user信息来更新用户详细信息")
+    @RequestMapping(value = "users", method = RequestMethod.PUT)
+    @ApiOperation(value = "更新用户详细信息", notes = "根据传过来的user信息来更新用户详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long"),
             @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
     })
-    public void putUser(@RequestBody User user) {
-        userMapper.updateByPrimaryKey(user);
+    public ResultBean putUser(@RequestBody User user) {
+        return  ResultBean.ok(userMapper.updateByPrimaryKey(user));
     }
 
 
@@ -106,17 +109,37 @@ public class UserController {
         return ResultBean.ok(path);
     }
 
-    @RequestMapping(value = "users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "user/", method = RequestMethod.PUT)
+    @ApiOperation(value = "更新user", notes = "更新信息")
+    public ResultBean updateUserStatus(@RequestBody User user) throws Exception{
+        String pwd = user.getPassword();
+        if (!StringUtil.isBlank(pwd)){
+            user.setPassword(PasswordHash.createHash(pwd));
+        }
+         userMapper.updateByPrimaryKey(user);
+         return ResultBean.ok();
+    }
+
+
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     public User getUser(@PathVariable Long id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
-    @GetMapping("users/list")
+    @GetMapping("user/list")
     @ApiOperation(value = "获取用户列表")
-    public List<User> getUserList() {
-        return userMapper.selectAll();
+    public ResultBean getUserList(int page,int limit,String searchKey,String searchValue) {
+        Map<String,Object> params = new HashMap<>(4);
+        logger.info("page=========>"+((page-1)*limit)+"\t"+"limit==========>"+limit);
+        params.put("page",(page-1)*limit);
+        params.put("limit",limit);
+        if (!StringUtil.isBlank(searchKey,searchValue)){
+            params.put("searchKey",searchKey);
+            params.put("searchValue",searchValue);
+        }
+        return ResultBean.ok(userMapper.selectRenderAll(params));
     }
 
     /**
@@ -146,6 +169,4 @@ public class UserController {
         Files.write(path, bytes);
         return relativePath.toString();
     }
-
-
 }

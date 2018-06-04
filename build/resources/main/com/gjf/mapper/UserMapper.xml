@@ -36,18 +36,14 @@
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.gjf.model.User">
         UPDATE tb_user
-        SET nickname      = #{nickname,jdbcType=VARCHAR},
-            password      = #{password,jdbcType=VARCHAR},
-            email         = #{email,jdbcType=VARCHAR},
-            phone         = #{phone,jdbcType=VARCHAR},
-            gender        = #{gender,jdbcType=CHAR},
-            school        = #{school,jdbcType=VARCHAR},
-            campus        = #{campus,jdbcType=VARCHAR},
-            number        = #{number,jdbcType=VARCHAR},
-            head_img      = #{headImg,jdbcType=VARCHAR},
-            is_blocked    = #{status,jdbcType=TINYINT},
-            time_create   = #{timeCreate,jdbcType=TIMESTAMP},
-            time_modified = #{timeModified,jdbcType=TIMESTAMP}
+        <trim prefix="set" suffixOverrides=",">
+            <if test="nickname!=null">nickname = #{nickname,jdbcType=VARCHAR},</if>
+            <if test="email!=null">email = #{email,jdbcType=VARCHAR},</if>
+            <if test="phone!=null">phone = #{phone,jdbcType=VARCHAR},</if>
+            <if test="status!=null">is_blocked = #{status,jdbcType=TINYINT},</if>
+            <if test="gender!=null">gender = #{gender,jdbcType=TINYINT},</if>
+            <if test="timeModified!=null">time_modified = #{timeModified,jdbcType=TIMESTAMP}</if>
+        </trim>
         WHERE pk_id = #{id,jdbcType=BIGINT}
     </update>
 
@@ -95,6 +91,7 @@
         WHERE nickname = #{nickname,jdbcType=VARCHAR}
     </select>
 
+
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT
             pk_id,
@@ -111,5 +108,25 @@
             time_create,
             time_modified
         FROM tb_user
+    </select>
+
+    <select id="selectRenderAll" resultType="java.util.HashMap">
+        SELECT
+        pk_id userId,
+        nickname userNickname,
+        email,
+        phone mobilePhone,
+        gender sex,
+        school,
+        campus,
+        number userAccount,
+        is_blocked userStatus,
+        time_create createTime
+        FROM tb_user
+        WHERE TRUE
+        <if test="searchKey != null">
+            AND tb_user.${searchKey} like '%${searchValue}%'
+        </if>
+        LIMIT #{page},#{limit}
     </select>
 </mapper>

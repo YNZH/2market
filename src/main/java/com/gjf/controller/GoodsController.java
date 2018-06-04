@@ -8,6 +8,9 @@ import com.gjf.mapper.GoodsMapper;
 import com.gjf.mapper.base.BaseMapper;
 import com.gjf.model.Goods;
 import com.gjf.model.ResultBean;
+import com.gjf.model.User;
+import com.gjf.utils.StringUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +70,25 @@ public class GoodsController {
         return ResultBean.ok(goodsService.selectGoodsAndUserByGoodsId(goodsId));
     }
 
+    @GetMapping("/goods/list")
+    @ApiOperation(value = "获取商品列表")
+    public ResultBean getUserList(int page,int limit,String searchKey,String searchValue) {
+        Map<String,Object> params = new HashMap<>(4);
+        params.put("page",(page-1)*limit);
+        params.put("limit",limit);
+        if (!StringUtil.isBlank(searchKey,searchValue)){
+            params.put("searchKey",searchKey);
+            params.put("searchValue",searchValue);
+        }
+        return ResultBean.ok(goodsService.selectRenderAll(params));
+    }
+
+    @RequestMapping(value = "/goods/", method = RequestMethod.PUT)
+    @ApiOperation(value = "更新goods", notes = "更新商品信息")
+    public ResultBean updateGoodsStatus(@RequestBody Goods goods) {
+        goodsService.updateByPrimaryKey(goods);
+        return ResultBean.ok();
+    }
 
     private void saveUploadFiles(List<MultipartFile> files) throws IOException {
 

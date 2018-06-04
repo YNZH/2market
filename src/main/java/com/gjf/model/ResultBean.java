@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: GJF
@@ -22,6 +23,7 @@ public class ResultBean<T> {
     private Integer code;
     private String msg;
     private T data;
+    private int count;
 
     /**
      * 返回成功，传入返回体具体出參
@@ -33,6 +35,7 @@ public class ResultBean<T> {
                 .code(0)
                 .msg("success")
                 .data(t)
+                .count(t instanceof List ?((List)t).size():0)
                 .build();
     }
 

@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gjf.mapper.CommentMapper">
-  <resultMap id="BaseResultMap" type="com.gjf.model.Comment">
-    <id column="pk_id" jdbcType="BIGINT" property="id" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="pics" jdbcType="VARCHAR" property="pics" />
-    <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate" />
-    <result column="time_modified" jdbcType="TIMESTAMP" property="timeModified" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_comment
-    where pk_id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.gjf.model.Comment">
-    insert into tb_comment (pk_id, goods_id, user_id, parent_id,
-      content, pics, time_create, 
-      time_modified)
-    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
-      #{content,jdbcType=VARCHAR}, #{pics,jdbcType=VARCHAR}, #{timeCreate,jdbcType=TIMESTAMP}, 
-      #{timeModified,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.gjf.model.Comment">
-    update tb_comment
-    set goods_id = #{goodsId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      parent_id = #{parentId,jdbcType=BIGINT},
-      content = #{content,jdbcType=VARCHAR},
-      pics = #{pics,jdbcType=VARCHAR},
-      time_create = #{timeCreate,jdbcType=TIMESTAMP},
-      time_modified = #{timeModified,jdbcType=TIMESTAMP}
-    where pk_id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select pk_id, goods_id, user_id,parent_id, content, pics, time_create, time_modified
-    from tb_comment
-    where pk_id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select pk_id, goods_id, user_id,parent_id, content, pics, time_create, time_modified
-    from tb_comment
-  </select>
-  <select id="listCommentsByGoodsId" resultType="java.util.HashMap">
-    select pk_id, goods_id, user_id,parent_id, content, pics, time_create, time_modified
-    from tb_comment
-    WHERE goods_id = #{goodsId,jdbcType=BIGINT}
-  </select>
+    <resultMap id="BaseResultMap" type="com.gjf.model.Comment">
+        <id column="pk_id" jdbcType="BIGINT" property="id"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="pics" jdbcType="VARCHAR" property="pics"/>
+        <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate"/>
+        <result column="time_modified" jdbcType="TIMESTAMP" property="timeModified"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM tb_comment
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.gjf.model.Comment">
+        INSERT INTO tb_comment (pk_id, goods_id, user_id, parent_id,
+                                content, pics, time_create,
+                                time_modified)
+        VALUES
+            (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
+             #{content,jdbcType=VARCHAR}, #{pics,jdbcType=VARCHAR}, #{timeCreate,jdbcType=TIMESTAMP},
+             #{timeModified,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.gjf.model.Comment">
+        UPDATE tb_comment
+        SET goods_id      = #{goodsId,jdbcType=BIGINT},
+            user_id       = #{userId,jdbcType=BIGINT},
+            parent_id     = #{parentId,jdbcType=BIGINT},
+            content       = #{content,jdbcType=VARCHAR},
+            pics          = #{pics,jdbcType=VARCHAR},
+            time_create   = #{timeCreate,jdbcType=TIMESTAMP},
+            time_modified = #{timeModified,jdbcType=TIMESTAMP}
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            pk_id,
+            goods_id,
+            user_id,
+            parent_id,
+            content,
+            pics,
+            time_create,
+            time_modified
+        FROM tb_comment
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            pk_id,
+            goods_id,
+            user_id,
+            parent_id,
+            content,
+            pics,
+            time_create,
+            time_modified
+        FROM tb_comment
+    </select>
+    <select id="listCommentsByGoodsId" resultType="java.util.HashMap">
+        SELECT
+            a.user_id,
+            a.parent_id,
+            b.nickname,
+            b.head_img headerImg,
+            a.content,
+            a.time_create,
+            a.time_modified
+        FROM tb_comment a, tb_user b
+        WHERE goods_id = #{goodsId,jdbcType=BIGINT}
+        AND a.user_id = b.pk_id
+    </select>
 </mapper>

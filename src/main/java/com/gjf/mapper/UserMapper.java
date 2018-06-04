@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -13,4 +14,6 @@ import java.util.Map;
 public interface UserMapper extends BaseMapper<User>{
     User findUserByName(String name);
     void updateUserHeader(Map map);
+    List<Map<String,Object>> selectRenderAll(Map<String,Object> params);
+
 }

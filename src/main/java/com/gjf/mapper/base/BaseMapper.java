@@ -1,7 +1,6 @@
 package com.gjf.mapper.base;
 
 import java.util.List;
-
 /**
  * @Author: GJF
  * @Date : 2018/04/25

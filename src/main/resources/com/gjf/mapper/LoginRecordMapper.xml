@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjf.mapper.LoginRecordMapper">
+    <resultMap id="BaseResultMap" type="com.gjf.model.LoginRecord">
+        <id column="pk_id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="os_name" jdbcType="VARCHAR" property="osName"/>
+        <result column="device" jdbcType="VARCHAR" property="device"/>
+        <result column="browser_type" jdbcType="VARCHAR" property="browserType"/>
+        <result column="ip_address" jdbcType="VARCHAR" property="ipAddress"/>
+        <result column="time_create" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM tb_login_record
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.gjf.model.LoginRecord">
+        INSERT INTO tb_login_record (pk_id, user_id, os_name,
+                                     device, browser_type, ip_address,
+                                     time_create)
+        VALUES (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{osName,jdbcType=VARCHAR},
+                #{device,jdbcType=VARCHAR}, #{browserType,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.gjf.model.LoginRecord">
+        UPDATE tb_login_record
+        SET user_id      = #{userId,jdbcType=BIGINT},
+            os_name      = #{osName,jdbcType=VARCHAR},
+            device       = #{device,jdbcType=VARCHAR},
+            browser_type = #{browserType,jdbcType=VARCHAR},
+            ip_address   = #{ipAddress,jdbcType=VARCHAR},
+            time_create  = #{createTime,jdbcType=TIMESTAMP}
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            pk_id,
+            user_id,
+            os_name,
+            device,
+            browser_type,
+            ip_address,
+            time_create
+        FROM tb_login_record
+        WHERE pk_id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            pk_id,
+            user_id,
+            os_name,
+            device,
+            browser_type,
+            ip_address,
+            time_create
+        FROM tb_login_record
+    </select>
+
+    <select id="getLoginRecordList" resultType="java.util.HashMap">
+        SELECT
+            os_name      osName,
+            ip_address   ipAddress,
+            browser_type browserType,
+            device,
+            tb_login_record.time_create  createTime,
+            nickname     userNickName,
+            number       userAccount
+
+        FROM tb_login_record, tb_user
+        WHERE tb_login_record.user_id = tb_user.pk_id
+        <if test="userName != null">
+            AND tb_user.nickname=#{userName}
+        </if>
+        <if test="startDate != null">
+            AND tb_login_record.time_create&gt;=#{startDate}
+        </if>
+        <if test="endDate != null">
+            AND tb_login_record.time_create&lt;=#{endDate}
+        </if>
+        ORDER BY tb_login_record.time_create DESC
+        LIMIT #{page}, #{limit}
+    </select>
+</mapper>

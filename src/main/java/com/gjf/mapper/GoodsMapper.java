@@ -15,5 +15,6 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     List<Map<String,Object>> getGoodsByCategory(String category);
     List<Map<String,Object>> getRecentlyGoods(String category);
     Map<String,Object> selectGoodsAndUserByGoodsId(Long id);
+    List<Map<String,Object>> selectRenderAll(Map<String,Object> params);
 
 }

@@ -47,8 +47,20 @@ CREATE TABLE tb_message(
   pk_id BIGINT PRIMARY KEY  AUTO_INCREMENT,
   formId BIGINT,
   toId BIGINT,
+  fromName VARCHAR(64),
+  headerImg VARCHAR(132),
   content TEXT,
   offline TINYINT,
   time_create DATETIME
-)
+);
 
+DROP TABLE IF EXISTS tb_login_record;
+CREATE TABLE tb_login_record(
+  pk_id BIGINT PRIMARY KEY  AUTO_INCREMENT,
+  user_id BIGINT,
+  os_name VARCHAR(256),
+  device VARCHAR(256),
+  browser_type VARCHAR(256),
+  ip_address VARCHAR(50),
+  time_create DATETIME
+)

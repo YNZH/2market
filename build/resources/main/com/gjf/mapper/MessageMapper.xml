@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjf.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.gjf.model.Message">
+    <id column="pk_id" jdbcType="BIGINT" property="id" />
+    <result column="fromId" jdbcType="BIGINT" property="fromId" />
+    <result column="toId" jdbcType="BIGINT" property="toId" />
+    <result column="fromName" jdbcType="VARCHAR" property="fromName" />
+    <result column="headerImg" jdbcType="VARCHAR" property="headerImg" />
+    <result column="offline" jdbcType="TINYINT" property="offline" />
+    <result column="time_create" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_message
+    where pk_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gjf.model.Message">
+    insert into tb_message (pk_id, fromId, toId,
+    fromName, headerImg, offline,
+    time_create, content)
+    values (#{id,jdbcType=BIGINT}, #{fromId,jdbcType=BIGINT}, #{toId,jdbcType=BIGINT},
+    #{fromName,jdbcType=VARCHAR}, #{headerImg,jdbcType=VARCHAR}, #{offline,jdbcType=TINYINT},
+    #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.gjf.model.Message">
+    update tb_message
+    set fromId = #{fromId,jdbcType=BIGINT},
+    toId = #{toId,jdbcType=BIGINT},
+    fromName = #{fromName,jdbcType=VARCHAR},
+    headerImg = #{headerImg,jdbcType=VARCHAR},
+    offline = #{offline,jdbcType=TINYINT},
+    time_create = #{createTime,jdbcType=TIMESTAMP},
+    content = #{content,jdbcType=VARCHAR}
+    where pk_id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateToReaded" parameterType="java.lang.Long">
+    update tb_message
+    set    offline = 0
+    where toId = #{userId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select pk_id, fromId, toId, fromName, headerImg, offline, time_create, content
+    from tb_message
+    where pk_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pk_id, fromId, toId, fromName, headerImg, offline, time_create, content
+    from tb_message
+  </select>
+  <select id="getHistory" parameterType="java.lang.Long" resultType="java.util.HashMap">
+    select fromId, toId, fromName, headerImg,time_create, content
+    from tb_message
+    where toId = #{userId,jdbcType=BIGINT}
+    OR fromId = #{userId,jdbcType=BIGINT}
+    ORDER BY time_create ASC
+  </select>
+
+  <select id="getOfflineMessage" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT pk_id, fromId, toId, fromName, headerImg, offline, time_create, content
+    FROM tb_message
+    WHERE toId = #{userId,jdbcType=BIGINT}
+    AND offline = 1
+    ORDER BY time_create ASC
+  </select>
+</mapper>

@@ -2,6 +2,9 @@ package com.gjf.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * @Author: GJF
@@ -9,11 +12,15 @@ import lombok.Data;
  * Time   : 12:51
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Message {
-    private String fromId;
-    private String toId;
+    private Long id;
+    private Long fromId;
+    private Long toId;
     private String fromName;
-    private String content;
     private String headerImg;
+    private Integer offline;
+    private Date createTime;
+    private String content;
 }
